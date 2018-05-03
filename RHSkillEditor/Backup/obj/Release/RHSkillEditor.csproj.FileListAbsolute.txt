@@ -1,0 +1,8 @@
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.ImageImporter.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.Properties.Resources.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.Readme.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.RHSkillEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.SkillEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.SkillLevelEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.csproj.GenerateResource.cache
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\Release\RHSkillEditor.csproj.CoreCompileInputs.cache

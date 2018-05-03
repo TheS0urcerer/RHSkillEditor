@@ -1,0 +1,12 @@
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.csprojResolveAssemblyReference.cache
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.ImageImporter.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.Properties.Resources.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.Readme.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.RHSkillEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.SkillEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.SkillLevelEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.SkillSelector.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.SkillTreeEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.SkillTreeItemEditor.resources
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.csproj.GenerateResource.cache
+D:\VSProjects\RHSkillEditor\RHSkillEditor\obj\x64\Debug\RHSkillEditor.csproj.CoreCompileInputs.cache
