@@ -51,6 +51,7 @@ namespace RHSkillEditor
     public class Skill : IBinItem<SkillStruct>
     {
         public SkillStruct data;
+        public SkillStruct Data { set { data = value; } get { return data; } }
         public Bitmap icon { get; set; }
         public SkillIdx skillIdx { get; set; }
         public ushort pad { get; set; }

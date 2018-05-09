@@ -16,6 +16,9 @@ namespace RHSkillEditor
         public static BinFile<SkillLevelStruct, SkillLevel> skillLevelFile { get; set; }
         public static BinFile<SkillTreeStruct, SkillTreeItem> skillTreeFile { get; set; }
 
+        private bool skillTreeEdited { get; set; } = false;
+        private bool skillEdited { get; set; } = false;
+
         public RHSkillEditor()
         {
             InitializeComponent();
@@ -39,8 +42,9 @@ namespace RHSkillEditor
         private void lbJobs_SelectedIndexChanged(object sender, EventArgs e)
         {
             JobName job = (JobName)lbJobs.SelectedItem;
-            btnEditTree.Visible = true; 
-            gbxSkills.Text = $"Skills for {job.ToString()}";
+            btnEditTree.Visible = true;
+            btnSaveSkills.Visible = false;
+            gbxSkills.Text = $"Skills for {job.GetDescription()}";
             List<Skill> infos = new List<Skill>();
             lbxSkills.Items.Clear();
             foreach (SkillTreeItem skillTree in skillTreeFile.content)
@@ -55,10 +59,16 @@ namespace RHSkillEditor
             }
             if (lbxSkills.Items.Count == 0)
             {
-                gbxSkills.Visible = btnEdit.Visible = btnEditTree.Visible = false; 
+                gbxSkills.Visible = btnEdit.Visible = btnEditTree.Visible = false;
+                if (skillEdited || skillTreeEdited)
+                    btnSaveSkills.Visible = true;
             }
             else
+            {
                 gbxSkills.Visible = btnEditTree.Visible = true;
+                if (skillEdited || skillTreeEdited)
+                    btnSaveSkills.Visible = true;
+            }
         }
 
         private void btnChDir_Click(object sender, EventArgs e)
@@ -68,6 +78,7 @@ namespace RHSkillEditor
             if (fb.ShowDialog() == DialogResult.OK)
             {
                 Properties.Settings.Default.workingDir = fb.SelectedPath;
+                Properties.Settings.Default.TargetDir = Path.Combine(fb.SelectedPath, "Edited");
                 Properties.Settings.Default.Save();
                 loadFiles(Properties.Settings.Default.workingDir);
             }
@@ -75,12 +86,12 @@ namespace RHSkillEditor
 
         private void loadFiles(string workingDir)
         {
+            wipe();
             if (!File.Exists(Path.Combine(workingDir, Global.SKILL_INFO_NAME)))
                 return;
             txtSource.Text = workingDir;
-            String editDir = txtEdited.Text = Path.Combine(workingDir, "Edited");
-            
-            Directory.CreateDirectory(editDir);
+            txtEdited.Text = Properties.Settings.Default.TargetDir;
+            Directory.CreateDirectory(txtEdited.Text);
 
             // start filling stuff in
             skillFile = new BinFile<SkillStruct, Skill>(Path.Combine(workingDir, Global.SKILL_INFO_NAME));
@@ -108,6 +119,18 @@ namespace RHSkillEditor
                 lbJobs.Items.Add(job);
         }
 
+        private void wipe()
+        {
+            // Simple method to clear out stuff that was previously loaded
+            skillFile?.wipe();
+            skillTreeFile?.wipe();
+            skillLevelFile?.wipe();
+            Global.LevelDict.Clear();
+            Global.SkillDict.Clear();
+            txtSource.Text = txtEdited.Text = null;
+            lbxSkills.Items.Clear();
+        }
+
         private void btnEdit_Click(object sender, EventArgs e)
         {
             Skill info = (Skill)lbxSkills.SelectedItem;
@@ -119,12 +142,13 @@ namespace RHSkillEditor
                 editor.Dispose();
                 return;
             }
+            skillEdited = btnSaveSkills.Visible = true;
         }
 
         private void lbxSkills_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnEdit.Enabled = btnEdit.Visible = true;
-            btnSaveSkills.Enabled = btnSaveSkills.Visible = true;
+
         }
 
         private void importImagesToolStripMenuItem_Click(object sender, EventArgs e) =>
@@ -183,10 +207,25 @@ namespace RHSkillEditor
 
         private void btnSaveSkills_Click(object sender, EventArgs e)
         {
-            skillFile.save();
-            skillLevelFile.save();
-            skillTreeFile.save();
+            string msg = "";
+            if (skillEdited)
+            {
+                skillFile.save();
+                skillLevelFile.save();
+                msg += "Skills, Skill Levels ";
+            }
+            if (skillEdited && skillTreeEdited)
+                msg += " and "; 
+            if (skillTreeEdited)
+            {
+                skillTreeFile.save();
+                msg += "Skill Tree";
+            }
+            msg += " saved.";    
 
+            skillTreeEdited = skillEdited = false;
+            btnSaveSkills.Visible = false;
+            MessageBox.Show(msg,"Bin Files Saved");
         }
 
         private void btnEditTree_Click(object sender, EventArgs e)
@@ -194,14 +233,33 @@ namespace RHSkillEditor
             if (lbJobs.SelectedIndex != -1)
             {
                 SkillTreeEditor editor = new SkillTreeEditor(skillFile, skillTreeFile, (JobName)lbJobs.SelectedItem);
-                editor.ShowDialog();
-
+                if (editor.ShowDialog() == DialogResult.OK)
+                {
+                    skillTreeEdited = editor.skillTreeEdited;
+                    skillEdited = editor.skillEdited;
+                    if (skillEdited || skillTreeEdited)
+                        btnSaveSkills.Visible = true;
+                }
+                    
+                // something changed so allow save
             }
         }
 
         private void lbxSkills_DoubleClick(object sender, EventArgs e)
         {
-
+            ListBox listbox = sender as ListBox;
+            Skill info = listbox.SelectedItem as Skill;
+            if (info == null)
+                return;
+            SkillEditor editor = new SkillEditor(info);
+            if (editor.ShowDialog() == DialogResult.Cancel)
+            {
+                editor.Dispose();
+                return;
+            }
+            editor.Dispose();
+            info.save();
+            skillEdited = btnEdit.Visible = true;
         }
     }
 }

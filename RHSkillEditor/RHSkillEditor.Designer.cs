@@ -32,6 +32,7 @@ namespace RHSkillEditor
         {
             this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbJobs = new System.Windows.Forms.ListBox();
             this.btnEditTree = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtEdited = new System.Windows.Forms.TextBox();
@@ -49,7 +50,6 @@ namespace RHSkillEditor
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readmeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lbJobs = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.gbxSkills.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -61,14 +61,30 @@ namespace RHSkillEditor
             | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.lbJobs);
             this.groupBox1.Controls.Add(this.btnEditTree);
-            this.groupBox1.Location = new System.Drawing.Point(12, 102);
+            this.groupBox1.Location = new System.Drawing.Point(12, 122);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(252, 428);
+            this.groupBox1.Size = new System.Drawing.Size(252, 461);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Job";
+            // 
+            // lbJobs
+            // 
+            this.lbJobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbJobs.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.lbJobs.FormattingEnabled = true;
+            this.lbJobs.ItemHeight = 16;
+            this.lbJobs.Location = new System.Drawing.Point(5, 21);
+            this.lbJobs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbJobs.Name = "lbJobs";
+            this.lbJobs.Size = new System.Drawing.Size(240, 372);
+            this.lbJobs.TabIndex = 11;
+            this.lbJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbJobs_DrawItem);
+            this.lbJobs.SelectedIndexChanged += new System.EventHandler(this.lbJobs_SelectedIndexChanged);
             // 
             // btnEditTree
             // 
@@ -76,10 +92,10 @@ namespace RHSkillEditor
             this.btnEditTree.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btnEditTree.Image = global::RHSkillEditor.Properties.Resources.skillTree;
             this.btnEditTree.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEditTree.Location = new System.Drawing.Point(79, 369);
+            this.btnEditTree.Location = new System.Drawing.Point(90, 402);
             this.btnEditTree.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEditTree.Name = "btnEditTree";
-            this.btnEditTree.Size = new System.Drawing.Size(165, 46);
+            this.btnEditTree.Size = new System.Drawing.Size(154, 46);
             this.btnEditTree.TabIndex = 10;
             this.btnEditTree.Text = "Edit Skill Tree";
             this.btnEditTree.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -106,7 +122,7 @@ namespace RHSkillEditor
             this.txtEdited.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtEdited.Name = "txtEdited";
             this.txtEdited.ReadOnly = true;
-            this.txtEdited.Size = new System.Drawing.Size(399, 22);
+            this.txtEdited.Size = new System.Drawing.Size(420, 22);
             this.txtEdited.TabIndex = 6;
             // 
             // label2
@@ -127,11 +143,11 @@ namespace RHSkillEditor
             this.gbxSkills.Controls.Add(this.btnSaveSkills);
             this.gbxSkills.Controls.Add(this.lbxSkills);
             this.gbxSkills.Controls.Add(this.btnEdit);
-            this.gbxSkills.Location = new System.Drawing.Point(269, 102);
+            this.gbxSkills.Location = new System.Drawing.Point(269, 122);
             this.gbxSkills.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.gbxSkills.Name = "gbxSkills";
             this.gbxSkills.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.gbxSkills.Size = new System.Drawing.Size(299, 428);
+            this.gbxSkills.Size = new System.Drawing.Size(320, 461);
             this.gbxSkills.TabIndex = 7;
             this.gbxSkills.TabStop = false;
             this.gbxSkills.Text = "Skills for %%";
@@ -141,15 +157,14 @@ namespace RHSkillEditor
             // 
             this.btnSaveSkills.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveSkills.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnSaveSkills.Enabled = false;
             this.btnSaveSkills.Image = global::RHSkillEditor.Properties.Resources.save;
             this.btnSaveSkills.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveSkills.Location = new System.Drawing.Point(5, 369);
+            this.btnSaveSkills.Location = new System.Drawing.Point(139, 402);
             this.btnSaveSkills.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSaveSkills.Name = "btnSaveSkills";
-            this.btnSaveSkills.Size = new System.Drawing.Size(133, 46);
+            this.btnSaveSkills.Size = new System.Drawing.Size(175, 46);
             this.btnSaveSkills.TabIndex = 11;
-            this.btnSaveSkills.Text = "Save Skills";
+            this.btnSaveSkills.Text = "Save Edited Files";
             this.btnSaveSkills.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.btnSaveSkills, "Save all skills unconditionally");
             this.btnSaveSkills.UseVisualStyleBackColor = true;
@@ -167,7 +182,7 @@ namespace RHSkillEditor
             this.lbxSkills.Location = new System.Drawing.Point(5, 21);
             this.lbxSkills.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lbxSkills.Name = "lbxSkills";
-            this.lbxSkills.Size = new System.Drawing.Size(283, 324);
+            this.lbxSkills.Size = new System.Drawing.Size(309, 356);
             this.lbxSkills.TabIndex = 10;
             this.lbxSkills.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbxSkills_DrawItem);
             this.lbxSkills.SelectedIndexChanged += new System.EventHandler(this.lbxSkills_SelectedIndexChanged);
@@ -177,10 +192,9 @@ namespace RHSkillEditor
             // 
             this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEdit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnEdit.Enabled = false;
             this.btnEdit.Image = global::RHSkillEditor.Properties.Resources.edit;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(171, 369);
+            this.btnEdit.Location = new System.Drawing.Point(6, 402);
             this.btnEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(119, 46);
@@ -200,13 +214,13 @@ namespace RHSkillEditor
             this.txtSource.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtSource.Name = "txtSource";
             this.txtSource.ReadOnly = true;
-            this.txtSource.Size = new System.Drawing.Size(363, 22);
+            this.txtSource.Size = new System.Drawing.Size(384, 22);
             this.txtSource.TabIndex = 10;
             // 
             // btnChDir
             // 
             this.btnChDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChDir.Location = new System.Drawing.Point(539, 44);
+            this.btnChDir.Location = new System.Drawing.Point(560, 44);
             this.btnChDir.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnChDir.Name = "btnChDir";
             this.btnChDir.Size = new System.Drawing.Size(31, 30);
@@ -226,7 +240,7 @@ namespace RHSkillEditor
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(573, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(594, 28);
             this.menuStrip1.TabIndex = 12;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -241,7 +255,7 @@ namespace RHSkillEditor
             // importImagesToolStripMenuItem
             // 
             this.importImagesToolStripMenuItem.Name = "importImagesToolStripMenuItem";
-            this.importImagesToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.importImagesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.importImagesToolStripMenuItem.Text = "Import images...";
             this.importImagesToolStripMenuItem.Click += new System.EventHandler(this.importImagesToolStripMenuItem_Click);
             // 
@@ -265,27 +279,11 @@ namespace RHSkillEditor
             this.readmeToolStripMenuItem.Text = "Readme";
             this.readmeToolStripMenuItem.Click += new System.EventHandler(this.readmeToolStripMenuItem_Click);
             // 
-            // lbJobs
-            // 
-            this.lbJobs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbJobs.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.lbJobs.FormattingEnabled = true;
-            this.lbJobs.ItemHeight = 16;
-            this.lbJobs.Location = new System.Drawing.Point(5, 21);
-            this.lbJobs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.lbJobs.Name = "lbJobs";
-            this.lbJobs.Size = new System.Drawing.Size(240, 340);
-            this.lbJobs.TabIndex = 11;
-            this.lbJobs.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.lbJobs_DrawItem);
-            this.lbJobs.SelectedIndexChanged += new System.EventHandler(this.lbJobs_SelectedIndexChanged);
-            // 
             // RHSkillEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 530);
+            this.ClientSize = new System.Drawing.Size(594, 584);
             this.Controls.Add(this.btnChDir);
             this.Controls.Add(this.txtSource);
             this.Controls.Add(this.gbxSkills);

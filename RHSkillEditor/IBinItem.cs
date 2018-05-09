@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace RohanFile
 {
+    
     public interface IBinItem<T>
     {
+        T Data { get; set; }
         T toStruct();
     }
-
-}
+    
+ }

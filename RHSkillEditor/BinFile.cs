@@ -15,9 +15,6 @@ namespace RohanFile
         public BinFile(string fileName)
         {
             name = fileName ?? throw new ArgumentNullException(nameof(fileName));
-            outName = RHSkillEditor.Properties.Settings.Default.TargetDir;
-            Directory.CreateDirectory(outName);
-            outName = Path.Combine(outName, Path.GetFileName(name));
             load();
         }
         public void load()
@@ -34,11 +31,19 @@ namespace RohanFile
         {
             List<T> tContent = new List<T>();           // throwaway list
             foreach (IBinItem<T> item in content)
-               tContent.Add((T)item.toStruct());
+               tContent.Add(item.Data);
+            outName = Path.Combine(RHSkillEditor.Properties.Settings.Default.TargetDir, 
+                Path.GetFileName(name));
+            Directory.CreateDirectory(RHSkillEditor.Properties.Settings.Default.TargetDir);
             BinIO.save(outName, tContent);
         }
         private C wrap(T t) =>
             (C)Activator.CreateInstance(typeof(C), new object[] { t, false });
-        
+
+        internal void wipe()
+        {
+            content?.Clear();
+            name = outName = null;
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace RHSkillEditor
 
         private Rectangle buttonRect = new Rectangle(80, 2, 34, 34);
         private StringFormat stringFormat;
+        public bool skillEdited { get; set; } = false;
+        public bool skillTreeEdited { get; set; } = false;
 
 
         public SkillTreeEditor()
@@ -127,6 +129,7 @@ namespace RHSkillEditor
             SkillEditor skillEditor = new SkillEditor(skill);
             if (skillEditor.ShowDialog() == DialogResult.Cancel)
                 return;
+            skillEdited = true;
         }
 
         private void changeSelectedSkillToolStripMenuItem_Click(object sender, EventArgs e)
@@ -138,7 +141,9 @@ namespace RHSkillEditor
             {
                 //Skill newSkill = selector.
                 sti.skill = selector.selectedSkill;
+                sti.skillIdx = sti.skill.skillIdx;
                 sti.save();
+                skillTreeEdited = true;
                 jobTree.Refresh();
             }
                 
@@ -153,7 +158,10 @@ namespace RHSkillEditor
             SkillTreeItem sti = ((SkillTreeNode)node.Tag).treeItem;
             SkillTreeItemEditor editor = new SkillTreeItemEditor(sti, race, raceSkills);
             if (editor.ShowDialog() == DialogResult.OK)
+            {
+                skillTreeEdited = true;
                 sti.save();
+            }
             else
                 sti.revert();
         }

@@ -28,7 +28,7 @@ namespace RHSkillEditor
     public class SkillLevelItem : IBinItem<SkillLevelItemStruct>
     {
         public bool dirty { set; get; } = false;
-        private SkillLevelItemStruct data;
+        private SkillLevelItemStruct data; 
         public SkillLevelItemStruct Data { set {data = value;} get { return data; } }
         public byte learnLevel { set; get; }
         public ushort castingMana { set; get; }

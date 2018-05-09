@@ -61,26 +61,48 @@ namespace RHSkillEditor
             cbxType.SelectedItem = skill.type;
             cbxSubtype.SelectedItem = skill.subType;
             cbxTarget.SelectedItem = skill.target;
-            loadSkillLevels();
+            //loadSkillLevels();
 
             nsLevelSelector.Value = currLevel = 1;
             currLevel = 1;
             skillLevelPopulate(currLevel);
         }
-        private void loadSkillLevels()
+
+        private void collect()
         {
-            List<SkillLevelItem> skillLevels = new List<SkillLevelItem>();
-            skillLevels.AddRange(skill.skillLevel.skillLevel);
+            // text fields
+            skill.addPoint = (byte)Byte.Parse(txtAddPoint.Text);
+            skill.addPointProbability = (int)itxtAddPointProb1.IntegerValue;
+            skill.addPointProbability2 = (int)itxtAddPointProb2.IntegerValue;
+            skill.description = txtDescr.Text;
+            skill.affectDescription = txtEffectDescr.Text;
+            skill.iconAffectFileName = txtEIconFile.Text;
+            skill.iconSmallAffectFile = txtSEIconFile.Text;
+            skill.engName = txtEName.Text;
+            skill.korName = txtKName.Text;
+            skill.iconFileName = txtIconFile.Text;
+            skill.iconPushFileName = txtPIconFile.Text;
+            skill.iconSmallFileName = txtSIconFile.Text;
+            skill.iconLargeFileName = txtLIconFile.Text;
+            skill.range = (int)itxtRange.IntegerValue;
+            // enum comboboxes
+            if (cbxType.SelectedIndex != -1)
+                 skill.type = (SkillType)cbxType.SelectedItem;
+            if (cbxSubtype.SelectedIndex != -1)
+                skill.subType = (SkillSubType)cbxSubtype.SelectedItem;
+            if (cbxTarget.SelectedIndex != -1)
+                skill.target = (SkillTarget)cbxTarget.SelectedItem;
+            skill.skillLevel.data = skill.skillLevel.toStruct();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            skill.revert();             // Back out skill changes
-            for (int i = 0; i< 7; i++)  // back out skillLevel changes
-                skill.skillLevel.skillLevel[i].restore();
-            DialogResult = DialogResult.Cancel;
-            Dispose();
-        }
+
+        //private void loadSkillLevels()
+        //{
+        //    List<SkillLevelItem> skillLevels = new List<SkillLevelItem>();
+        //    skillLevels.AddRange(skill.skillLevel.skillLevel);
+        //}
+
+
         private bool levelDirty { get; set; } = false;
         private int currLevel { get; set; } = 1;
         private void skillLevelPopulate(int level)
@@ -129,11 +151,11 @@ namespace RHSkillEditor
 
         private void nsLevelSelector_ValueChanged(object sender, EventArgs e)
         {
-            saveEdits(currLevel - 1);
+            saveLevelEdits(currLevel - 1);
             currLevel = (int)nsLevelSelector.Value;
             skillLevelPopulate(currLevel);
         }
-        private void saveEdits(int idx)
+        private void saveLevelEdits(int idx)
         {
             SkillLevelItem item = skill.skillLevel.skillLevel[idx];
             dirty = false;
@@ -153,14 +175,27 @@ namespace RHSkillEditor
             item.param[3] = (uint)ibParam3.IntegerValue;
             item.param[4] = (uint)ibParam4.IntegerValue;
             item.skillAniTime = (ushort)ibAniTime.IntegerValue;
+
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            saveLevelEdits(currLevel - 1);
+            collect();
             skill.save();
+            skill.data = skill.toStruct();
             for (int i=0; i<7; i++)
                 skill.skillLevel.skillLevel[i].save();
             DialogResult = DialogResult.OK;
+            Dispose();
+        }
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            skill.revert();             // Back out skill changes
+            for (int i = 0; i < 7; i++)  // back out skillLevel changes
+                skill.skillLevel.skillLevel[i].restore();
+            DialogResult = DialogResult.Cancel;
             Dispose();
         }
     }

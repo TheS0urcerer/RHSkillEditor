@@ -16,12 +16,15 @@ namespace RHSkillEditor
 
     public class SkillLevel : IBinItem<SkillLevelStruct>
     {
+        public SkillLevelStruct data;
         public SkillIdx skillIdx { get; set; }
         public ushort usPad { get; set; }
         public byte bPad { get; set; }
         public SkillLevelItem[] skillLevel { get; set; }
+        public SkillLevelStruct Data { get { return data; } set { data = value; } }
         public SkillLevel(SkillLevelStruct data, bool fake=false)
         {
+            this.data = data;
             skillIdx = data.skillIdx;
             usPad = data.usPad;
             bPad = data.bPad;

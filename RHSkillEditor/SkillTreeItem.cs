@@ -23,6 +23,7 @@ namespace RHSkillEditor
     public class SkillTreeItem : IBinItem<SkillTreeStruct>
     {
         SkillTreeStruct data;
+        public SkillTreeStruct Data { get { return data; } set { data = value; } }
         public JobName job { get; set; }
         public SkillIdx skillIdx { get; set; }
         public Skill skill { get; set; }
