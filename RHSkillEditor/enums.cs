@@ -33,6 +33,7 @@ namespace RHSkillEditor
     };
     public enum Race : byte
     {
+        [Description("No Race")] NULLRACE,
         [Description("Human")] HUMAN,
         [Description("Elf")] ELF,
         [Description("Half Elf")] HALFELF,
@@ -42,6 +43,7 @@ namespace RHSkillEditor
         [Description("Trinity")] TRINITY,
         [Description("Dekan")] DEKAN,
         [Description("Guild")] GM
+
     };
     public enum SkillIdx : ushort
     {

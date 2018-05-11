@@ -32,11 +32,13 @@ namespace RHSkillEditor
                 Properties.Settings.Default.TargetDir = Properties.Settings.Default.workingDir + "\\Edited";
                 Directory.CreateDirectory(Properties.Settings.Default.TargetDir);
             }
+
             Properties.Settings.Default.Save();
             stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Near;
             stringFormat.LineAlignment = StringAlignment.Center;
         }
+
 
 
         private void lbJobs_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,6 +119,9 @@ namespace RHSkillEditor
             // load the jobs listbox
             foreach (JobName job in Enum.GetValues(typeof(JobName)))
                 lbJobs.Items.Add(job);
+            // finally bring in the orphans from any previous runs
+            loadOrphans();
+
         }
 
         private void wipe()
@@ -260,6 +265,54 @@ namespace RHSkillEditor
             editor.Dispose();
             info.save();
             skillEdited = btnEdit.Visible = true;
+        }
+
+        private void RHSkillEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // save the orphan list 
+            string orphanName = Path.Combine(Application.StartupPath, "orphan.dat");
+            try
+            {
+                using (BinaryWriter writer = new BinaryWriter(new FileStream(orphanName, FileMode.Create)))
+                {
+                    foreach (OrphanSkill oSkill in Global.orphans.Values)
+                    {
+                        if (oSkill.race != Race.NULLRACE)
+                        {
+                            writer.Write((byte)oSkill.race);
+                            writer.Write((short)oSkill.skill.skillIdx);
+                        }
+                    }
+                }
+            }
+            catch (IOException)
+            {
+                Console.WriteLine($"Couldn't save {orphanName}");
+            }
+
+        }
+        private void loadOrphans()
+        {
+            // load the orphan list 
+            string orphanName = Path.Combine(Application.StartupPath, "orphan.dat");
+            try
+            {
+                using (BinaryReader reader = new BinaryReader(new FileStream(orphanName, FileMode.Open)))
+                {
+                    do
+                    {
+                        Race race = (Race)reader.ReadByte();
+                        SkillIdx skillidx = (SkillIdx)reader.ReadInt16();
+                        Global.orphans.TryAdd(skillidx, new OrphanSkill(race, skillidx));
+                    } while (true);
+                    
+                }
+            }
+            catch (IOException)
+            {
+                Console.WriteLine($"Couldn't load {orphanName}");
+            }
+
         }
     }
 }

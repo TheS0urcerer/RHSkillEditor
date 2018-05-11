@@ -110,6 +110,12 @@ namespace RHSkillEditor
                 if (!raceSkills.Contains(stn.treeItem.skill))
                     raceSkills.Add(stn.treeItem.skill);
             }
+            // add orphaned skills
+            foreach (OrphanSkill oSkill in Global.orphans.Values)
+            {
+                if (oSkill.race == race)
+                    raceSkills.Add(oSkill.skill);
+            }
         }
 
         private void populate()
@@ -139,7 +145,12 @@ namespace RHSkillEditor
             SkillSelector selector = new SkillSelector(race, raceSkills);
             if (selector.ShowDialog() == DialogResult.OK)
             {
-                //Skill newSkill = selector.
+                // The currently highlighted skill is about to become an orphan. track it
+                OrphanSkill orphan = new OrphanSkill(race, sti.skillIdx);
+                Global.orphans.TryAdd(sti.skillIdx, orphan);
+                // If we don't have one available in the list, add it in now to make surfe the skill is avaiailable.
+
+                //replace the currentlyt selected skill with the one chosen
                 sti.skill = selector.selectedSkill;
                 sti.skillIdx = sti.skill.skillIdx;
                 sti.save();

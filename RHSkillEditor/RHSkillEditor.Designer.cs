@@ -255,7 +255,7 @@ namespace RHSkillEditor
             // importImagesToolStripMenuItem
             // 
             this.importImagesToolStripMenuItem.Name = "importImagesToolStripMenuItem";
-            this.importImagesToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.importImagesToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
             this.importImagesToolStripMenuItem.Text = "Import images...";
             this.importImagesToolStripMenuItem.Click += new System.EventHandler(this.importImagesToolStripMenuItem_Click);
             // 
@@ -296,6 +296,7 @@ namespace RHSkillEditor
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "RHSkillEditor";
             this.Text = "Rohan Skills Editor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RHSkillEditor_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.gbxSkills.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
